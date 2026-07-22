@@ -5,9 +5,9 @@ import { ErrorState } from '@/shared/ui/ErrorState'
 import { Spinner } from '@/shared/ui/Spinner'
 
 export function BookList() {
-  const { data, isLoading, isError, refetch } = useBooksQuery()
+  const { data, isLoading, isError, isFetching, refetch } = useBooksQuery()
 
-  if (isLoading) {
+  if (isLoading && !data) {
     return (
       <div className="flex justify-center py-16">
         <Spinner />
@@ -15,26 +15,34 @@ export function BookList() {
     )
   }
 
-  if (isError) {
+  if (isError && !data) {
     return <ErrorState onRetry={() => void refetch()} />
   }
 
   if (!data?.length) {
     return (
       <EmptyState
-        title="아직 등록된 책이 없습니다"
-        description="첫 책을 추가해 보세요."
+        title="서재가 비어 있습니다"
+        description="도서를 검색해 첫 책을 등록해 보세요."
       />
     )
   }
 
   return (
-    <ul className="flex flex-col gap-3">
-      {data.map((book) => (
-        <li key={book.id}>
-          <BookCard book={book} />
-        </li>
-      ))}
-    </ul>
+    <div className="relative">
+      {isFetching && !isLoading ? (
+        <div className="absolute right-0 -top-1 opacity-40">
+          <Spinner />
+        </div>
+      ) : null}
+
+      <ul className="grid grid-cols-2 gap-3">
+        {data.map((book) => (
+          <li key={book.id}>
+            <BookCard book={book} />
+          </li>
+        ))}
+      </ul>
+    </div>
   )
 }

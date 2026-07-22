@@ -3,7 +3,6 @@ import { useMemosQuery } from '@/features/memos/hooks/useMemos'
 import { EmptyState } from '@/shared/ui/EmptyState'
 import { ErrorState } from '@/shared/ui/ErrorState'
 import { Spinner } from '@/shared/ui/Spinner'
-import type { Memo } from '@/features/memos/types/memo'
 
 type MemoListProps = {
   bookId?: string
@@ -33,8 +32,8 @@ export function MemoList({ bookId }: MemoListProps) {
   return (
     <ul className="flex flex-col gap-3">
       {data.map((memo) => (
-        <li key={(memo as Memo).id}>
-          <MemoItem memo={memo as Memo} />
+        <li key={memo.id}>
+          <MemoItem memo={memo} />
         </li>
       ))}
     </ul>

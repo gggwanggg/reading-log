@@ -3,14 +3,15 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { memoSchema, type MemoInput } from '@/features/memos/schemas/memo.schema'
 import { toDateKey } from '@/shared/utils/date'
 
-export function useMemoForm(defaultBookId?: string | null) {
+export function useMemoForm(defaultValues?: Partial<MemoInput>) {
   return useForm<MemoInput>({
     resolver: zodResolver(memoSchema),
     defaultValues: {
       content: '',
-      book_id: defaultBookId ?? null,
+      book_id: '',
       note_date: toDateKey(new Date()),
       tagIds: [],
+      ...defaultValues,
     },
   })
 }

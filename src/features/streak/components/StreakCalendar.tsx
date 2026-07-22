@@ -1,26 +1,14 @@
-import { CalendarGrid } from '@/shared/ui/CalendarGrid'
-import { ErrorState } from '@/shared/ui/ErrorState'
-import { Spinner } from '@/shared/ui/Spinner'
-import { useStreakCalendar } from '@/features/streak/hooks/useStreakCalendar'
+import { StreakGrass } from '@/features/streak/components/StreakGrass'
+import { PixelTitle } from '@/shared/ui/PixelTitle'
 
-type StreakCalendarProps = {
-  month?: string
-}
-
-export function StreakCalendar({ month }: StreakCalendarProps) {
-  const { weeks, isLoading, isError, refetch } = useStreakCalendar(month)
-
-  if (isLoading) {
-    return (
-      <div className="flex justify-center py-16">
-        <Spinner />
-      </div>
-    )
-  }
-
-  if (isError) {
-    return <ErrorState onRetry={() => void refetch()} />
-  }
-
-  return <CalendarGrid weeks={weeks} />
+/** GitHub Grass 스타일 독서 스트릭 캘린더 */
+export function StreakCalendar() {
+  return (
+    <section className="border-2 border-[var(--color-pixel)] bg-[var(--color-surface)] p-3 shadow-[3px_3px_0_0_var(--color-pixel)] sm:p-4">
+      <PixelTitle as="h2" size="sm" className="mb-3">
+        독서 잔디
+      </PixelTitle>
+      <StreakGrass />
+    </section>
+  )
 }

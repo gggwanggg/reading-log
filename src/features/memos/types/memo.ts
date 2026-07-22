@@ -1,1 +1,6 @@
-export type { Memo, MemoInsert } from '@/features/memos/api/memos.api'
+export type {
+  Memo,
+  MemoInsert,
+  MemoWithRelations,
+  MemoBook,
+} from '@/features/memos/api/memos.api'

@@ -8,10 +8,10 @@ type ChipProps = PropsWithChildren<{
 
 export function Chip({ children, active, onClick }: ChipProps) {
   const className = cn(
-    'inline-flex items-center rounded-full px-3 py-1 text-xs font-medium',
+    'inline-flex items-center border-2 border-[var(--color-pixel)] px-3 py-1 text-xs font-bold',
     active
-      ? 'bg-[var(--color-accent)] text-white'
-      : 'bg-[var(--color-accent-soft)] text-[var(--color-accent)]',
+      ? 'bg-[var(--color-accent)] text-white shadow-[2px_2px_0_0_var(--color-pixel)]'
+      : 'bg-[var(--color-accent-soft)] text-[var(--color-accent-deep)]',
   )
 
   if (onClick) {

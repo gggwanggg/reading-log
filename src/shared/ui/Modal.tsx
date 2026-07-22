@@ -1,4 +1,5 @@
 import type { PropsWithChildren } from 'react'
+import { PixelTitle } from '@/shared/ui/PixelTitle'
 import { cn } from '@/shared/utils/cn'
 
 type ModalProps = PropsWithChildren<{
@@ -15,15 +16,20 @@ export function Modal({ open, title, onClose, children }: ModalProps) {
       <button
         type="button"
         aria-label="닫기"
-        className="absolute inset-0 bg-black/40"
+        className="absolute inset-0 bg-[var(--color-pixel)]/35"
         onClick={onClose}
       />
       <div
         className={cn(
-          'relative z-10 w-full max-w-md rounded-2xl bg-[var(--color-surface)] p-4 shadow-xl',
+          'relative z-10 w-full max-w-md border-2 border-[var(--color-pixel)] bg-[var(--color-surface)] p-4',
+          'shadow-[4px_4px_0_0_var(--color-pixel)] animate-pixel-pop',
         )}
       >
-        {title ? <h2 className="mb-3 text-lg font-semibold">{title}</h2> : null}
+        {title ? (
+          <PixelTitle as="h2" size="sm" className="mb-3">
+            {title}
+          </PixelTitle>
+        ) : null}
         {children}
       </div>
     </div>

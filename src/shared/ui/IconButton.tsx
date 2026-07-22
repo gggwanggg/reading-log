@@ -13,7 +13,9 @@ export function IconButton({
     <button
       type={type}
       className={cn(
-        'inline-flex h-10 w-10 items-center justify-center rounded-full text-[var(--color-ink)] transition hover:bg-black/5',
+        'inline-flex h-10 w-10 items-center justify-center border-2 border-transparent text-[var(--color-ink)] transition',
+        'hover:border-[var(--color-pixel)] hover:bg-[var(--color-accent-soft)]',
+        'active:translate-x-px active:translate-y-px',
         className,
       )}
       {...props}

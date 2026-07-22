@@ -10,10 +10,17 @@ import { GraphPage } from '@/pages/GraphPage'
 import { HomePage } from '@/pages/HomePage'
 import { LoginPage } from '@/pages/LoginPage'
 import { MemoFormPage } from '@/pages/MemoFormPage'
+import { MemoEditPage } from '@/pages/MemoEditPage'
+import { ProfilePage } from '@/pages/ProfilePage'
+import { SplashPage } from '@/pages/SplashPage'
 import { StreakPage } from '@/pages/StreakPage'
 import { TagsPage } from '@/pages/TagsPage'
 
 export const router = createBrowserRouter([
+  {
+    path: ROUTES.splash,
+    element: <SplashPage />,
+  },
   {
     element: <PublicRoute />,
     children: [{ path: ROUTES.login, element: <LoginPage /> }],
@@ -32,15 +39,17 @@ export const router = createBrowserRouter([
           { path: ROUTES.books, element: <BooksPage /> },
           { path: ROUTES.bookDetail, element: <BookDetailPage /> },
           { path: ROUTES.memoNew, element: <MemoFormPage /> },
+          { path: ROUTES.memoEdit, element: <MemoEditPage /> },
           { path: ROUTES.tags, element: <TagsPage /> },
           { path: ROUTES.graph, element: <GraphPage /> },
           { path: ROUTES.streak, element: <StreakPage /> },
+          { path: ROUTES.profile, element: <ProfilePage /> },
         ],
       },
     ],
   },
   {
     path: '*',
-    element: <Navigate to={ROUTES.home} replace />,
+    element: <Navigate to={ROUTES.splash} replace />,
   },
 ])

@@ -11,12 +11,87 @@ export type GraphLink = {
   weight: number
 }
 
+export type NoteGraphNode = GraphNode & {
+  content: string
+  bookTitle?: string | null
+  tagIds: string[]
+}
+
+export type NoteGraphLink = GraphLink & {
+  sharedTagIds: string[]
+}
+
+export type NoteForGraph = {
+  id: string
+  content: string
+  books?: { title?: string | null } | null
+  note_tags?: Array<{ tag_id: string }>
+}
+
+function uniqueSorted(ids: string[]) {
+  return [...new Set(ids)].sort()
+}
+
+function truncateLabel(text: string, max = 18) {
+  const normalized = text.replace(/\s+/g, ' ').trim()
+  if (normalized.length <= max) return normalized
+  return `${normalized.slice(0, max)}…`
+}
+
+/**
+ * 지식 정원 그래프 데이터 생성
+ * - Node: Book Note
+ * - Edge: 하나 이상의 동일 Tag를 공유하는 Note 쌍 (weight = 공유 태그 수)
+ */
+export function buildKnowledgeGardenGraph(notes: NoteForGraph[]): {
+  nodes: NoteGraphNode[]
+  links: NoteGraphLink[]
+} {
+  const nodes: NoteGraphNode[] = notes.map((note) => {
+    const tagIds = uniqueSorted((note.note_tags ?? []).map((row) => row.tag_id))
+    const bookTitle = note.books?.title ?? null
+    const labelSource = bookTitle || note.content || '메모'
+
+    return {
+      id: note.id,
+      name: truncateLabel(labelSource),
+      content: note.content,
+      bookTitle,
+      tagIds,
+      val: Math.max(1, tagIds.length),
+    }
+  })
+
+  const links: NoteGraphLink[] = []
+
+  for (let i = 0; i < nodes.length; i += 1) {
+    for (let j = i + 1; j < nodes.length; j += 1) {
+      const left = nodes[i]
+      const right = nodes[j]
+      if (!left || !right) continue
+
+      const rightSet = new Set(right.tagIds)
+      const sharedTagIds = left.tagIds.filter((id) => rightSet.has(id))
+      if (sharedTagIds.length === 0) continue
+
+      links.push({
+        source: left.id,
+        target: right.id,
+        weight: sharedTagIds.length,
+        sharedTagIds,
+      })
+    }
+  }
+
+  return { nodes, links }
+}
+
 type TaggedItem = {
   tagIds: string[]
 }
 
 /**
- * 같은 아이템에 함께 등장한 태그 쌍을 엣지로 변환합니다.
+ * @deprecated 태그 공출현 그래프용. 지식 정원은 buildKnowledgeGardenGraph를 사용하세요.
  */
 export function buildCoOccurrenceGraph(
   items: TaggedItem[],

@@ -10,6 +10,7 @@ export type Book = Tables<'books'>
 export type BookInsert = {
   title: string
   author?: string | null
+  cover_url?: string | null
   status?: BookStatus
   started_at?: string | null
   finished_at?: string | null

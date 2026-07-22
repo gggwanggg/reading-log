@@ -1,14 +1,9 @@
-import { BookForm, BookList } from '@/features/books'
-import { AppHeader } from '@/shared/ui/AppHeader'
+import { LibrarySection } from '@/features/books'
 
 export function BooksPage() {
   return (
     <div>
-      <AppHeader title="내 책장" />
-      <div className="flex flex-col gap-6 p-4">
-        <BookForm />
-        <BookList />
-      </div>
+      <LibrarySection />
     </div>
   )
 }

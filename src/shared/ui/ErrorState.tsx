@@ -1,3 +1,7 @@
+import { Button } from '@/shared/ui/Button'
+import { PixelPanel } from '@/shared/ui/PixelPanel'
+import { PixelTitle } from '@/shared/ui/PixelTitle'
+
 type ErrorStateProps = {
   title?: string
   description?: string
@@ -10,18 +14,16 @@ export function ErrorState({
   onRetry,
 }: ErrorStateProps) {
   return (
-    <div className="flex flex-col items-center justify-center gap-3 px-6 py-16 text-center">
-      <p className="text-base font-medium text-[var(--color-ink)]">{title}</p>
+    <PixelPanel tone="peach" className="flex flex-col items-center gap-3 px-6 py-12 text-center">
+      <PixelTitle as="h2" size="sm">
+        {title}
+      </PixelTitle>
       <p className="text-sm text-[var(--color-muted)]">{description}</p>
       {onRetry ? (
-        <button
-          type="button"
-          onClick={onRetry}
-          className="text-sm font-medium text-[var(--color-accent)]"
-        >
+        <Button type="button" variant="secondary" className="h-9 px-3 text-xs" onClick={onRetry}>
           다시 시도
-        </button>
+        </Button>
       ) : null}
-    </div>
+    </PixelPanel>
   )
 }
