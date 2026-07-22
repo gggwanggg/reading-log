@@ -14,7 +14,7 @@
 | 프로젝트명 | reading-log |
 | 한 줄 소개 | 이 앱은 **독서가**가 **책·메모·태그**를 조회·추가·수정·삭제하고, 지식 그래프와 스트릭으로 독서 습관을 살펴볼 수 있도록 돕는 React CRUD 앱입니다. |
 | 데이터 저장 방식 | □ mock data / □ LocalStorage / ☑ Supabase |
-| 배포 또는 실행 링크 | (배포 시 작성) |
+| 배포 또는 실행 링크 | https://reading-log-omega-seven.vercel.app/ |
 | GitHub 링크 | https://github.com/gggwanggg/reading-log |
 
 ## 1-1. 내가 선택한 수행 수준
@@ -38,16 +38,10 @@
 | Graph (지식 정원) | Note 노드 + 동일 Tag 엣지 Force Graph | (캡처 추가) |
 | Calendar (스트릭) | GitHub Grass 스타일 잔디·연속일 | (캡처 추가) |
 | Profile | 계정·태그/달력/정원 바로가기·로그아웃 | (캡처 추가) |
-| 빈 상태 / 오류 상태 | EmptyState · ErrorState · 폼 검증 메시지 | (캡처 추가) |
+| 빈 상태 / 오류 상태 | EmptyState · ErrorState · 폼 검증 메시지 | |
 
-이미지 예시:
 
-```md
-![서재 화면](./screenshots/library.png)
-![메모 화면](./screenshots/memo.png)
-```
-
-> `screenshots/` 폴더에 캡처를 넣은 뒤 위 표를 갱신하세요.
+> `screenshots/` 폴더에 캡처 사진 넣어두었습니다.
 
 ---
 
@@ -81,7 +75,7 @@
 | 1 | Supabase 연결 | ☑ 시도 / □ 미시도 | Auth + DB + RLS 적용, `anon` 키만 프론트 사용 |
 | 2 | Auth/RLS 개념 검토 | ☑ 시도 / □ 미시도 | Google OAuth(PKCE), 테이블별 own-row RLS (`supabase/AUTH.md`, `SCHEMA.md`) |
 | 3 | 보안 주의사항 기록 | ☑ 시도 / □ 미시도 | `.env` / service role 미노출, 문서화 |
-| 4 | 배포 또는 외부 공유 | □ 시도 / ☑ 미시도 | 로컬 실행 중심 (배포는 추후) |
+| 4 | 배포 또는 외부 공유 | ☑ 시도 / □ 미시도 | Vercel 배포, `vercel.json` SPA rewrite, Supabase Site URL·Redirect 연동 확인 |
 | 5 | 지식 정원 (Force Graph) | ☑ 시도 / □ 미시도 | Node=Book Note, Edge=공유 Tag |
 | 6 | 독서 스트릭 (Grass) | ☑ 시도 / □ 미시도 | `created_at` 기준 잔디·연속일 (Dayjs) |
 | 7 | UI 테마 | ☑ 시도 / □ 미시도 | 픽셀·파스텔·힐링 게임 (Tailwind) |
@@ -102,8 +96,9 @@
 | 날짜 | Dayjs | 스트릭·날짜 포맷 |
 | 데이터 | Supabase (Auth + PostgreSQL) | CRUD·RLS·Google OAuth |
 | 외부 API | Google Books API (선택) | 도서 검색 (키 없어도 기본 검색 가능) |
+| 배포 | Vercel | Vite 정적 빌드(`dist`) + SPA rewrite |
 | AI 도구 | Cursor | 아키텍처·기능·UI·트러블슈팅 보조 |
-| 제출 | GitHub | 소스·README 공유 |
+| 제출 | GitHub / Vercel | 소스·README·실행 환경 공유 |
 
 ---
 
@@ -126,6 +121,14 @@ npm run dev
 | `npm run lint` / `format` / `typecheck` | 품질 검사 |
 
 상세: [`docs/SETUP.md`](./docs/SETUP.md)
+
+### 5-1-1. Vercel 배포 (완료)
+
+- GitHub 연동 Import, Framework: Vite, Output: `dist`
+- Environment Variables: `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` (선택: `VITE_GOOGLE_BOOKS_API_KEY`)
+- SPA 라우팅: 루트 [`vercel.json`](./vercel.json)
+- Supabase Authentication → URL Configuration에 Production Site URL·`/auth/callback` Redirect 등록
+- Google 로그인·경로 새로고침 동작 확인 완료
 
 ### 5-2. Supabase 준비
 
@@ -211,6 +214,7 @@ reading-log/
 ├─ package.json
 ├─ index.html
 ├─ .env.example
+├─ vercel.json               # Vercel SPA rewrite
 ├─ docs/
 │  ├─ SETUP.md
 │  └─ TROUBLESHOOTING.md
@@ -264,7 +268,7 @@ reading-log/
 | 7 | 스트릭 | Cursor | created_at Grass·Dayjs | 잔디·연속 계산 | 파스텔 레벨 색 조정 |
 | 8 | UI 테마 | Cursor | 픽셀·파스텔·힐링 게임 | Pixel* 컴포넌트·화면 적용 | 폰트·내비 라벨 검토 |
 | 9 | 오류·UX 보완 | Cursor | 등록 버튼 중복, 상태 클릭 충돌 | 코드 수정 + TROUBLESHOOTING | 상세에서만 상태 수정 등 확정 |
-| 10 | README 정리 | Cursor | 구현 결과로 README 채우기 | 본 문서 초안 | 링크·캡처·제출란 보완 예정 |
+| 10 | README 정리 | Cursor | 구현 결과로 README 채우기 | 본 문서 초안 | Vercel 배포 반영, 캡처·제출란은 추가 보완 |
 
 전체 원문: [`PROMPT.md`](./PROMPT.md)
 
@@ -337,6 +341,7 @@ React Force Graph로 지식 정원 — Node=Book Note, Edge=같은 Tag
 | 8 | 지식 정원 | 공통 태그 메모 2개+ | 노드·엣지 표시 | Force Graph | ☑ |
 | 9 | 스트릭 | 오늘 메모 작성 | 오늘 잔디·스트릭 | Grass UI | ☑ |
 | 10 | 타입/빌드 | `npm run build` | 성공 | 성공 | ☑ |
+| 11 | Vercel 배포 | Production URL 접속·로그인 | Splash/로그인/CRUD | 배포·Auth Redirect 확인 | ☑ |
 
 ---
 
@@ -371,8 +376,8 @@ React Force Graph로 지식 정원 — Node=Book Note, Edge=같은 Tag
 | 실시간 1시간 안에 사용한 프롬프트 | 아키텍처 설계, 스키마, Auth 스캐폴딩 |
 | 실시간 1시간 안에 확인한 AI 생성 결과 | Feature 폴더·라우터·스키마 초안 |
 | 실시간 1시간 안에 발생한 오류 또는 보완 계획 | Env·OAuth Redirect·마이그레이션 적용 필요 |
-| 10일 보완 기간에 완성한 기능 | 서재/메모/태그 CRUD, 지식 정원, 스트릭, 픽셀 UI, 트러블슈팅 문서 |
-| 10일 보완 기간에 추가한 README/캡처/테스트 기록 | 본 README·PROMPT·TROUBLESHOOTING (캡처는 추가 예정) |
+| 10일 보완 기간에 완성한 기능 | 서재/메모/태그 CRUD, 지식 정원, 스트릭, 픽셀 UI, Vercel 배포, 트러블슈팅 문서 |
+| 10일 보완 기간에 추가한 README/캡처/테스트 기록 | README·PROMPT·TROUBLESHOOTING·Vercel 배포 기록 (캡처는 추가 예정) |
 
 ## 14. 보완 전후 비교
 
@@ -382,8 +387,9 @@ React Force Graph로 지식 정원 — Node=Book Note, Edge=같은 Tag
 | 컴포넌트 구조 | 예시 수준 | Feature + shared UI | 확장 용이 |
 | 입력 검증·상태 처리 | 미비 | Zod + Empty/Error | 검증·안내 동작 |
 | 저장 방식 | 미연결 | Supabase + RLS | 데이터 유지 |
-| README | 빈 템플릿 | 구현 반영 작성 | 제출용 초안 완성 |
+| README | 빈 템플릿 | 구현·배포 반영 작성 | 제출용 문서 갱신 |
 | 보안 점검 | 미문서화 | AUTH/SCHEMA/보안 메모 | anon·RLS 확인 |
+| 배포 | 로컬만 | Vercel + Supabase Redirect | 로그인·CRUD 확인 |
 
 ---
 
@@ -395,7 +401,7 @@ React Force Graph로 지식 정원 — Node=Book Note, Edge=같은 Tag
 | 민감 데이터 | 건강·금융 등 민감 데이터 미사용 | ☑ |
 | API Key | service role 미사용·미커밋, Google Books 키는 `.env`만 | ☑ |
 | `.env` | `.gitignore`로 제외, `.env.example`만 공개 | ☑ |
-| 외부 공유 링크 | 배포 전 편집 권한·키 노출 재확인 예정 | ☑ |
+| 외부 공유 링크 | Vercel 공개 URL·anon key만 사용, service role 미노출 확인 | ☑ |
 | 저작권 | Google Books·폰트(Press Start 2P, Nunito) 라이선스 범위 내 사용 | ☑ |
 | 출처·라이선스 | 의존성은 `package.json`, 스키마·문서는 저장소 내 명시 | ☑ |
 | AI 생성 코드 | CRUD·UX·보안을 직접 실행·검토 후 반영 | ☑ |
@@ -415,7 +421,7 @@ React Force Graph로 지식 정원 — Node=Book Note, Edge=같은 Tag
 
 | 아쉬운 점 | 원인 | 다음 개선 방향 |
 |---|---|---|
-| 배포·실행 링크 미제공 | 로컬 검증 우선 | Vercel 등 배포 + Supabase Site URL 갱신 |
+| README에 Production URL 미기입 | 배포 직후 문서만 우선 갱신 | Vercel Domains URL을 §1·§18에 붙여 넣기 |
 | 스크린샷 미첨부 | 문서 우선 작성 | `screenshots/` 캡처 후 §2 갱신 |
 | `streaks` 테이블과 UI 집계 이중성 | UI는 note `created_at` 집계 | 트리거로 streaks 동기화 또는 스키마 정리 |
 | 번들 용량 (Force Graph) | 단일 청크 | 그래프 라우트 코드 스플리팅 |
@@ -427,7 +433,7 @@ React Force Graph로 지식 정원 — Node=Book Note, Edge=같은 Tag
 | 항목 | 링크 또는 설명 |
 |---|---|
 | GitHub 링크 | https://github.com/gggwanggg/reading-log |
-| 실행 링크 | (배포 후 작성) |
+| 실행 링크 | https://reading-log-omega-seven.vercel.app/ |
 | 실행 화면 캡처 | `./screenshots/` (추가 예정) |
 | 과제 안내 Colab | `과제5_ReactCRUD_과제안내_v0.2.ipynb` |
 | 제출 폼 | `{{SUBMISSION_LINK}}` |
