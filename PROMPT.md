@@ -368,4 +368,12 @@
   컴포넌트 단위로 설계해주세요.
   ```
 
+## [v0.8.3] Vercel 배포 준비 (vercel.json)
+- **요청 목적**: Vite SPA를 Vercel에 배포할 때 React Router 새로고침 404를 막고, env·Auth URL 안내를 문서화하기 위함
+- **사용된 프롬프트 원본**:
+  ```text
+  vercel로 배포하기 위한 준비 알려주세요.
+  (후속) 네
+  ```
+
 
