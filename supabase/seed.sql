@@ -1,0 +1,8 @@
+-- Seed는 auth.users / public.users UUID가 필요합니다.
+-- 회원가입 후 아래처럼 사용하세요.
+--
+-- insert into public.books (user_id, title, author, status)
+-- values ('YOUR-USER-UUID', '데미안', '헤르만 헤세', 'reading');
+--
+-- insert into public.book_notes (user_id, book_id, content, note_date)
+-- values ('YOUR-USER-UUID', 'YOUR-BOOK-UUID', '한 줄 메모 예시', current_date);
