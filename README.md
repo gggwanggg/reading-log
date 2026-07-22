@@ -434,7 +434,7 @@ React Force Graph로 지식 정원 — Node=Book Note, Edge=같은 Tag
 |---|---|
 | GitHub 링크 | https://github.com/gggwanggg/reading-log |
 | 실행 링크 | https://reading-log-omega-seven.vercel.app/ |
-| 실행 화면 캡처 | `./screenshots/` (추가 예정) |
+| 실행 화면 캡처 | `./screenshots/` |
 | 과제 안내 Colab | `과제5_ReactCRUD_과제안내_v0.2.ipynb` |
-| 제출 폼 | `{{SUBMISSION_LINK}}` |
+| 제출 폼 | `https://drive.google.com/drive/u/1/folders/1fYGx7aXnfqyXOF9MhFwMwiupVOqNvEwH` |
 | 관련 문서 | [SETUP](./docs/SETUP.md) · [AUTH](./supabase/AUTH.md) · [SCHEMA](./supabase/SCHEMA.md) · [TROUBLESHOOTING](./docs/TROUBLESHOOTING.md) · [PROMPT](./PROMPT.md) |
